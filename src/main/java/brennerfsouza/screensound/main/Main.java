@@ -96,7 +96,7 @@ public class Main {
 
     private void listMusics() {
         List<Artist> artists = repository.findAll();
-        artists.forEach(System.out::println);
+        artists.forEach(a -> a.getMusics().forEach(System.out::println));
     }
 
     private void searchMusicByArtist() {
@@ -104,8 +104,11 @@ public class Main {
         var name = reader.nextLine();
         Optional<Artist> artist = repository.findByNameContainingIgnoreCase(name);
         if (artist.isPresent()) {
-            artist.get().getMusics().forEach(System.out::println);
+            List<Music> musics = repository.searchMusicsByArtist(name);
+            musics.forEach(System.out::println);
 
+        }else{
+            System.out.println("Artista não cadastrado!");
         }
     }
 
